@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import yfinance as yf
 import smtplib
 import os
@@ -7,7 +6,6 @@ from datetime import datetime
 from typing import Dict, List
 from dotenv import load_dotenv
 
-# Load .env only if file exists (local dev)
 if os.path.exists('.env'):
     load_dotenv()
 
@@ -16,7 +14,6 @@ class FinancialMonitor:
         self.symbols = {"SP500": "^GSPC", "Bitcoin": "BTC-USD", "Gold": "GC=F"}
         self.thresholds = {"daily": -1.0, "weekly": -10.0, "monthly": -20.0}
         
-        # Variables d'env obligatoires
         self.smtp_server = os.getenv("SMTP_SERVER", "smtp.gmail.com")
         self.sender_email = os.getenv("SENDER_EMAIL")
         self.sender_password = os.getenv("SENDER_PASSWORD") 
