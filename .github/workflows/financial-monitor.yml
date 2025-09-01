@@ -1,0 +1,34 @@
+name: Financial Monitor
+
+on:
+  schedule:
+    # 15h30 UTC (10h30 CEST en été, 9h30 CET en hiver)
+    - cron: '30 8 * * *'
+    # 22h30 UTC (22h30 CEST+1 en été, 21h30 CET en hiver)
+    - cron: '30 20 * * *'
+  # Permet de lancer manuellement
+  workflow_dispatch:
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+    
+    - name: Install dependencies
+      run: |
+        pip install yfinance python-dotenv
+    
+    - name: Run financial monitor
+      env:
+        SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+        SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
+        SENDER_PASSWORD: ${{ secrets.SENDER_PASSWORD }}
+        RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
+      run: python main.py
