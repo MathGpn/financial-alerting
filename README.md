@@ -9,7 +9,7 @@ Track SP500, gold, bitcoin crashes
 - uv run main.py
 
 # mise en place du scheduler (2 options)
-- github actions
+- github actions (test possible avec le bouton "run workflow" depuis l'interface github)
 - mise en place du cronjob (tous les jours à 16h) : `crontab -e` puis `30 15 * * * /usr/bin/python3 ./main.py --- 30 22 * * * /usr/bin/python3 ./main.py`
 
 # coding init
