@@ -2,9 +2,11 @@ name: Financial Monitor
 
 on:
   schedule:
-    # 15h30 UTC (10h30 CEST en été, 9h30 CET en hiver)
-    - cron: '30 8 * * *'
-    # 22h30 UTC (22h30 CEST+1 en été, 21h30 CET en hiver)
+    # 13h30 UTC (15h30 CEST en été, 14h30 CET en hiver)
+    - cron: '30 13 * * *'
+    # 17h UTC (19h CEST en été, 18h CET en hiver)
+    - cron: '00 17 * * *'
+    # 20h30 UTC (22h30 CEST en été, 21h30 CET en hiver)
     - cron: '30 20 * * *'
   # Permet de lancer manuellement
   workflow_dispatch:
