@@ -3,7 +3,7 @@ Track SP500, gold, bitcoin crashes
 
 # test the app
 - git clone the repo
-- Create & fill the `.env` file at the root with the correct values (ask MGN for the credentials) following the ".env.example" template
+- Create & fill the `.env` file at the root with the correct values (ask MGN for the credentials) following the ".env.example" template (attention à setup un mot de passe d'application au lieu du mdp de votre boite mail via : https://myaccount.google.com/apppasswords?utm_source=chatgpt.com&pli=1&rapt=AEjHL4OOe2ZHFJDDgWZaKuUTGaYflyGT-67SJcWPLwiLe2rfGux2ZxPKrT0R_WLZsy7rzaiPgXD2pS90DkqamiS5rYv6GePhtM_8v6Bmpi-1FqSjScEviJU)
 - uv sync
 - source .venv/bin/activate
 - uv run main.py
