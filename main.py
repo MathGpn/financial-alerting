@@ -50,7 +50,7 @@ class FinancialMonitor:
                 change_key = f"{period}_change"
                 if data[change_key] <= threshold:
                     alerts.append(
-                        f"🚨 {name}: {data[change_key]:.2f}% ({period}) "
+                        f"{name}: {data[change_key]:.2f}% ({period}) "
                         f"- Prix: ${data['current']:.2f}"
                     )
         
@@ -58,7 +58,7 @@ class FinancialMonitor:
 
     def send_email(self, alerts: List[str]):
         if not alerts or not self.sender_email or not self.recipient_email:
-            print("⚠️ Pas d'alerte ou variables email manquantes")
+            print("Pas d'alerte ou variables email manquantes")
             return
 
         subject = f"Alerte Financiere - {datetime.now().strftime('%Y-%m-%d')}"
@@ -72,9 +72,9 @@ class FinancialMonitor:
                 server.ehlo()
                 server.login(self.sender_email, self.sender_password)
                 server.sendmail(self.sender_email, self.recipient_email, email_text)
-            print(f"✅ Email envoyé à {self.recipient_email} ({len(alerts)} alertes)")
+            print(f"Email envoyé à {self.recipient_email} ({len(alerts)} alertes)")
         except Exception as e:
-            print(f"❌ Erreur email: {e}")
+            print(f"Erreur email: {e}")
 
     def debug_prices(self):
         for name, symbol in self.symbols.items():
