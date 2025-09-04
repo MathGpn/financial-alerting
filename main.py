@@ -15,9 +15,9 @@ class FinancialMonitor:
         self.thresholds = {"daily": -1.0, "weekly": -10.0, "monthly": -20.0}
         
         self.smtp_server = os.getenv("SMTP_SERVER", "smtp.gmail.com")
-        self.sender_email = os.getenv("EMAIL_SENDER")
-        self.sender_password = os.getenv("EMAIL_PASSWORD") 
-        self.recipient_email = os.getenv("EMAIL_RECEIVER")
+        self.sender_email = os.getenv("SENDER_EMAIL")
+        self.sender_password = os.getenv("SENDER_PASSWORD") 
+        self.recipient_email = os.getenv("RECIPIENT_EMAIL")
 
     def get_price_data(self, symbol: str) -> Dict:
         ticker = yf.Ticker(symbol)
@@ -76,7 +76,6 @@ class FinancialMonitor:
             print(f"✅ Email envoyé à {self.recipient_email} ({len(alerts)} alertes)")
         except Exception as e:
             print(f"❌ Erreur email: {e}")
-
 
     def debug_prices(self):
         for name, symbol in self.symbols.items():
