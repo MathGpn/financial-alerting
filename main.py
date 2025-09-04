@@ -61,7 +61,7 @@ class FinancialMonitor:
             print("⚠️ Pas d'alerte ou variables email manquantes")
             return
 
-        subject = f"Alerte Financière - {datetime.now().strftime('%Y-%m-%d')}"
+        subject = f"Alerte Financiere - {datetime.now().strftime('%Y-%m-%d')}"
         body = "\n".join(alerts)
         
         # Format email comme ton test qui fonctionne
@@ -87,10 +87,6 @@ class FinancialMonitor:
 
     def run(self):
         print(f"Vérification - {datetime.now()}")
-        print("DEBUG EMAIL CONFIG:")
-        print("  sender:", self.sender_email)
-        print("  receiver:", self.recipient_email)
-        print("  password:", "OK" if self.sender_password else "MISSING")
 
         self.debug_prices()
         alerts = self.check_alerts()
