@@ -1,6 +1,12 @@
 # financial_alerting
 Track SP500, gold, bitcoin crashes
 
+## Thresholds for the alerts
+
+- Daily => 2%
+- Weekly => 5%
+- Monthly => 10%
+
 # test the app
 - git clone the repo
 - Create & fill the `.env` file at the root with the correct values (ask MGN for the credentials) following the ".env.example" template (attention à setup un mot de passe d'application au lieu du mdp de votre boite mail après avoir activé la double authentification via : https://support.google.com/accounts/answer/185833?visit_id=01756902679743-7661386429652067549&p=InvalidSecondFactor&rd=1)

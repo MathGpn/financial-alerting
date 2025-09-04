@@ -12,7 +12,7 @@ if os.path.exists('.env'):
 class FinancialMonitor:
     def __init__(self):
         self.symbols = {"SP500": "^GSPC", "Bitcoin": "BTC-USD", "Gold": "GC=F"}
-        self.thresholds = {"daily": -3.0, "weekly": -10.0, "monthly": -20.0}
+        self.thresholds = {"daily": -2.0, "weekly": -5.0, "monthly": -10.0}
         
         self.smtp_server = os.getenv("SMTP_SERVER", "smtp.gmail.com")
         self.sender_email = os.getenv("SENDER_EMAIL")
