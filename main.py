@@ -63,16 +63,15 @@ class FinancialMonitor:
 
         subject = f"Alerte Financière - {datetime.now().strftime('%Y-%m-%d')}"
         body = "\n".join(alerts)
-
-        msg = MIMEText(body, "plain", "utf-8")
-        msg['Subject'] = subject
-        msg['From'] = self.sender_email
-        msg['To'] = self.recipient_email
+        
+        # Format email comme ton test qui fonctionne
+        email_text = f"Subject: {subject}\n\n{body}"
 
         try:
             with smtplib.SMTP_SSL(self.smtp_server, 465) as server:
+                server.ehlo()
                 server.login(self.sender_email, self.sender_password)
-                server.send_message(msg)
+                server.sendmail(self.sender_email, self.recipient_email, email_text)
             print(f"✅ Email envoyé à {self.recipient_email} ({len(alerts)} alertes)")
         except Exception as e:
             print(f"❌ Erreur email: {e}")

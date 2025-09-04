@@ -5,8 +5,8 @@ from dotenv import load_dotenv
 if os.path.exists('../.env'):
     load_dotenv()
 
-YOUR_GOOGLE_EMAIL = os.getenv("EMAIL_SENDER")  # The email you setup to send the email using app password
-YOUR_GOOGLE_EMAIL_APP_PASSWORD = os.getenv("EMAIL_PASSWORD")   # The app password you generated
+YOUR_GOOGLE_EMAIL = os.getenv("SENDER_EMAIL")  # The email you setup to send the email using app password
+YOUR_GOOGLE_EMAIL_APP_PASSWORD = os.getenv("SENDER_PASSWORD")   # The app password you generated
 
 smtpserver = smtplib.SMTP_SSL('smtp.gmail.com', 465)
 smtpserver.ehlo()
