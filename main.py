@@ -89,6 +89,11 @@ class FinancialMonitor:
 
     def run(self):
         print(f"Vérification - {datetime.now()}")
+        print("DEBUG EMAIL CONFIG:")
+        print("  sender:", self.sender_email)
+        print("  receiver:", self.recipient_email)
+        print("  password:", "OK" if self.sender_password else "MISSING")
+
         self.debug_prices()
         alerts = self.check_alerts()
         
