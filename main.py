@@ -57,25 +57,26 @@ class FinancialMonitor:
         return alerts
 
     def send_email(self, alerts: List[str]):
-        if not alerts or not self.sender_email:
+        if not alerts or not self.sender_email or not self.recipient_email:
+            print("⚠️ Pas d'alerte ou variables email manquantes")
             return
-            
+
         subject = f"Alerte Financière - {datetime.now().strftime('%Y-%m-%d')}"
         body = "\n".join(alerts)
-        
-        msg = MIMEText(body)
+
+        msg = MIMEText(body, "plain", "utf-8")
         msg['Subject'] = subject
         msg['From'] = self.sender_email
         msg['To'] = self.recipient_email
-        
+
         try:
-            with smtplib.SMTP(self.smtp_server, 587) as server:
-                server.starttls()
+            with smtplib.SMTP_SSL(self.smtp_server, 465) as server:
                 server.login(self.sender_email, self.sender_password)
                 server.send_message(msg)
-            print(f"Email envoyé: {len(alerts)} alertes")
+            print(f"✅ Email envoyé à {self.recipient_email} ({len(alerts)} alertes)")
         except Exception as e:
-            print(f"Erreur email: {e}")
+            print(f"❌ Erreur email: {e}")
+
 
     def debug_prices(self):
         for name, symbol in self.symbols.items():
