@@ -1,6 +1,5 @@
 import os
 import logging
-import smtplib
 import pandas as pd
 import yfinance as yf
 
@@ -18,7 +17,7 @@ if os.path.exists('.env'):
 class FinancialMonitor:
     def __init__(self):
         self.symbols = {"SP500": "^GSPC", "Bitcoin": "BTC-USD", "Gold": "GC=F"}
-        self.thresholds = {"daily": 10.0, "weekly": 10.0, "monthly": 10.0}
+        self.thresholds = {"daily": -1.0, "weekly": -3.0, "monthly": -5.0}
         
         self.smtp_server = os.getenv("SMTP_SERVER", "smtp.gmail.com")
         self.sender_email = os.getenv("SENDER_EMAIL", "")
