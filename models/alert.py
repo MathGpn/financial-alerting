@@ -6,11 +6,12 @@ from typing import Optional
 from dataclasses import dataclass
 
 
-@dataclass
+@dataclass(eq=True)
 class Alert:
 
     _product: str
     _symbol: str
+    _period: str
     _msg: Optional[str]
     _graph: Optional[bytes]
 
@@ -19,12 +20,14 @@ class Alert:
         cls,
         product: str,
         symbol: str,
+        period: str,
         msg: Optional[str] = None,
         graph: Optional[bytes] = None,
     ) -> 'Alert':
         return cls(
             _product=product,
             _symbol=symbol,
+            _period=period,
             _msg=msg,
             _graph=graph,
         )
@@ -46,6 +49,10 @@ class Alert:
     @property
     def msg(self) -> Optional[str]:
         return self._msg
+
+    @property
+    def period(self) -> Optional[str]:
+        return self._period
 
     """Setters section"""
 
@@ -73,3 +80,16 @@ class Alert:
         )
 
         return pio.to_image(fig, format="png")
+
+    def __eq__(self, other):
+        if isinstance(other, Alert):
+            return (
+                self.product == other.product
+                and self.symbol == other.symbol
+                and self.period == other.period
+            )
+
+        return False
+
+    def __hash__(self):
+        return hash((self.product, self.symbol, self.period))

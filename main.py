@@ -1,11 +1,12 @@
 import os
+import time
 import logging
 import pandas as pd
 import yfinance as yf
 
 from datetime import datetime
 from dotenv import load_dotenv
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Set
 
 from models import Alert, Financial, Mailer
 
@@ -17,13 +18,37 @@ if os.path.exists('.env'):
 class FinancialMonitor:
     def __init__(self):
         self.symbols = {"SP500": "^GSPC", "Bitcoin": "BTC-USD", "Gold": "GC=F"}
-        self.thresholds = {"daily": -1.0, "weekly": -3.0, "monthly": -5.0}
+        self.thresholds = {"daily": -2.0, "weekly": -5.0, "monthly": -10.0}
         
         self.smtp_server = os.getenv("SMTP_SERVER", "smtp.gmail.com")
         self.sender_email = os.getenv("SENDER_EMAIL", "")
         self.sender_password = os.getenv("SENDER_PASSWORD", "")
         self.recipient_email = os.getenv("RECIPIENT_EMAIL", "")
         self.port = 465
+
+        self.alerted_today: Set[Alert] = set()
+        self.last_reset = datetime.now().date()
+
+    def run_continuously(self, interval_seconds: int = 120):
+        while True:
+            now = datetime.now()
+
+            if now.date() != self.last_reset:
+                self.alerted_today.clear()
+                self.last_reset = now.date()
+                logger.info("Reset daily alerts tracker")
+
+            alerts = self.check_alerts()
+            filtered_alerts = [a for a in alerts if a not in self.alerted_today]
+
+            if filtered_alerts:
+                self.send_email(filtered_alerts)
+                for alert in filtered_alerts:
+                    self.alerted_today.add(alert)
+            else:
+                logger.info("No new alerts !")
+
+            time.sleep(interval_seconds)
 
     def get_price_data(
         self,
@@ -64,7 +89,7 @@ class FinancialMonitor:
                         f"{name}: {delta[period]:.2f}% ({period}) "
                         f"- Prix: ${delta['current']:.2f}"
                     )
-                    alert = Alert.create(name, symbol, msg)
+                    alert = Alert.create(name, symbol, period, msg)
                     financial = Financial.create(symbol)
                     data = financial.get_data(period)
 
@@ -119,5 +144,6 @@ class FinancialMonitor:
             logger.info("Aucune alerte")
 
 if __name__ == "__main__":
+    interval = int(os.getenv('INTERVAL', '90'))
     monitor = FinancialMonitor()
-    monitor.run()
+    monitor.run_continuously(interval)
