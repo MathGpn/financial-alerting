@@ -25,7 +25,7 @@ jobs:
     
     - name: Install dependencies
       run: |
-        pip install yfinance python-dotenv plotly pandas
+        pip install yfinance python-dotenv
     
     - name: Run financial monitor
       env:
@@ -33,5 +33,4 @@ jobs:
         SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
         SENDER_PASSWORD: ${{ secrets.SENDER_PASSWORD }}
         RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
-        INTERVAL: ${{ secrets.INTERVAL }}
       run: python main.py
